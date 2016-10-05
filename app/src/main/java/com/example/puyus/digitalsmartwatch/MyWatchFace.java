@@ -30,6 +30,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.wearable.watchface.CanvasWatchFaceService;
+import android.support.wearable.watchface.WatchFaceService;
 import android.support.wearable.watchface.WatchFaceStyle;
 import android.text.format.Time;
 import android.view.SurfaceHolder;
@@ -231,13 +232,23 @@ public class MyWatchFace extends CanvasWatchFaceService {
         public void onTapCommand(int tapType, int x, int y, long eventTime) {
             Resources resources = MyWatchFace.this.getResources();
             switch (tapType) {
-                case TAP_TYPE_TOUCH:
+                case WatchFaceService.TAP_TYPE_TOUCH:
                     // The user has started touching the screen.
+                    /*mTapCount++;
+                    mBackgroundPaint.setColor(resources.getColor(mTapCount % 2 == 0 ?
+                            R.color.white : R.color.background2));*/
+                    String steps = String.format("1638 steps");
+                    Rect bounds = new Rect();
+                    bounds.setEmpty();
+                    Canvas canvas = new Canvas();
+                    canvas.drawText(steps, mXOffset, mYOffset, mTextPaint);
+                    onDraw(canvas, bounds);
+//                    tex.drawText(steps,mXOffset,mYOffset,mTextPaint);
                     break;
-                case TAP_TYPE_TOUCH_CANCEL:
+                case WatchFaceService.TAP_TYPE_TOUCH_CANCEL:
                     // The user has started a different gesture or otherwise cancelled the tap.
                     break;
-                case TAP_TYPE_TAP:
+                case WatchFaceService.TAP_TYPE_TAP:
                     // The user has completed the tap gesture.
                     mTapCount++;
                     mBackgroundPaint.setColor(resources.getColor(mTapCount % 2 == 0 ?
